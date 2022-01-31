@@ -1,15 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { GraphicAssetService } from './graphic-asset.service';
-import { CreateGraphicAssetDto } from './dto/create-graphic-asset.dto';
 import { UpdateGraphicAssetDto } from './dto/update-graphic-asset.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { Request } from 'express';
+
+export const nameUploadFile = (
+  req: Request,
+  file: Express.Multer.File,
+  callback: (error: Error | null, filename: string) => void,
+): void => {
+  const extension = file.originalname.split('.').pop();
+  callback(null, Date.now() + '.' + extension);
+};
 
 @Controller('graphic-asset')
 export class GraphicAssetController {
-  constructor(private readonly graphicAssetService: GraphicAssetService) {}
+  constructor(private readonly graphicAssetService: GraphicAssetService) {
+  }
 
   @Post()
-  create(@Body() createGraphicAssetDto: CreateGraphicAssetDto) {
-    return this.graphicAssetService.create(createGraphicAssetDto);
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './upload',
+        filename: nameUploadFile,
+      }),
+    }),
+  )
+  async uploadedFile(@UploadedFile() file: Express.Multer.File) {
+    return {
+      originalname: file.originalname,
+      filename: file.filename,
+    };
   }
 
   @Get()
