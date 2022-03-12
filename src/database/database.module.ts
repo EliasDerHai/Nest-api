@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphicAsset } from '../graphic-asset/entities/graphic-asset.entity';
+import { Room } from '../schafkopf/room/entities/room.entity';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { GraphicAsset } from '../graphic-asset/entities/graphic-asset.entity';
       username: 'postgres',
       password: 'postgres',
       database: 'dnd-store',
-      entities: [GraphicAsset],
+      entities: [GraphicAsset, Room],
       synchronize: true,
     }),
   ],
