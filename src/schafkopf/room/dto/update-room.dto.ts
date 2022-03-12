@@ -4,4 +4,5 @@ import { CreateRoomDto } from './create-room.dto';
 export class UpdateRoomDto extends PartialType(CreateRoomDto) {
   id: number;
   name: string;
+  host: string;
 }

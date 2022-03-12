@@ -1,3 +1,4 @@
 export class CreateRoomDto {
-  name: string
+  name: string;
+  host: string;
 }

@@ -14,6 +14,7 @@ export class RoomService {
   create(createRoomDto: CreateRoomDto) {
     const room = new Room();
     room.name = createRoomDto.name;
+    room.host = createRoomDto.host;
     return this.roomRepository.save(room);
   }
 
@@ -27,7 +28,8 @@ export class RoomService {
 
   async update(id: number, updateRoomDto: UpdateRoomDto) {
     const room = await this.roomRepository.findOne(id);
-    room.name = updateRoomDto.name
+    room.name = updateRoomDto.name;
+    room.host = updateRoomDto.host;
     return this.roomRepository.save(room);
   }
 

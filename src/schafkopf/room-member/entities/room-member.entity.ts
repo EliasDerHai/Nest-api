@@ -1,8 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Room {
-
+export class RoomMember {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -10,5 +9,11 @@ export class Room {
   name: string;
 
   @Column()
-  host: string;
+  roomId: number;
+
+  @Column()
+  position: number;
+
+  @Column()
+  uid: number;
 }
